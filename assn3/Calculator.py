@@ -15,8 +15,9 @@ class Button(QToolButton):
 
 
     def sizeHint(self):
+	#크기를 크게 설정해주었다.
         size = super(Button, self).sizeHint()
-        size.setHeight(size.height() + 20)
+        size.setHeight(size.height() + 35)
         size.setWidth(max(size.width(), size.height()))
         return size
 
@@ -30,7 +31,7 @@ class Calculator(QWidget):
         self.display = QLineEdit('')
         self.display.setReadOnly(True)
         self.display.setAlignment(Qt.AlignRight)
-        self.display.setMaxLength(15)
+        self.display.setMaxLength(35)
 
         # Digit Buttons
         self.digitButton = [x for x in range(0, 10)]
@@ -81,8 +82,11 @@ class Calculator(QWidget):
 
 
         for i in range(1,10):
-            numLayout.addWidget(self.digitButton[i], (10 - (i+1))//3, (i-1)%3)
-
+            #numLayout.addWidget(self.digitButton[i], (10 - (i+1))//3, (i-1)%3)
+		row = (10 - (i + 1))//3
+		column = (i - 1)%3
+		numLayout.addWidget(self.digitButton[i], row, column)
+	
         # numLayout.addWidget(self.digitButton[1], 2, 0)
         # numLayout.addWidget(self.digitButton[2], 2, 1)
         # numLayout.addWidget(self.digitButton[3], 2, 2)
@@ -116,12 +120,38 @@ class Calculator(QWidget):
 
         self.setWindowTitle("My Calculator")
 
+    def keyPressEvent(self, QKeyEvent):
+        if QKeyEvent.key() == Qt.Key_Escape:
+            self.close()
+
     def buttonClicked(self):
+        
+	#a, b에 Error message를 미리 몰아서 할당해 줌으로써 나중에 오타로 인해 생기는 불상사를 방지할 수 있도록 한다.
+	a = "you can't divide it into zero"
+	b = "Write down the formula correctly"
+	
         button = self.sender()
         key = button.text()
+	
+	#어떠한 키를 누르던 결과 창의 내용이 에러 메세지 a, b이면 결과 창을 비우고 시작한다.
+	if self.display.text() == a or self.display.text() == b:
+	    self.display.setText("")
+
+	# "="를 누르면 일단 계산을 하도록 노력하고, 에러 두가지가 나타날 경우에 각각의 경우에 따른 에러 메시지를 결과창에 표시하도록 설계해준다.
         if key == '=':
-            result = str(eval(self.display.text()))
-            self.display.setText(result)
+	    try:
+	        result = str(eval(self.display.text()))
+		self.display.setText(result)
+            
+	    # 0으로 나눈 경우
+            except ZeroDivisionError:
+                self.display.setText(a)
+
+	    # 계산이 안되는 식을 써놓고 "="을 누른경우. 문법오류.	
+            except SyntaxError:
+                self.display.setText(b)
+
+      
         elif key == 'C':
             self.display.setText("")
         else:
