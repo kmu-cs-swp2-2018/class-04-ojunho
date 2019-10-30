@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QLineEdit, QToolButton
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5.QtWidgets import QLayout, QGridLayout
 
-from keypad2 import numPadList, operatorList, constantList, functionList
+from keypad2 import numPadList, operatorList, constantList, constantValues, functionList, functionMethods
 import calcFunctions
 
 class Button(QToolButton):
@@ -71,6 +71,7 @@ class Calculator(QWidget):
         self.setWindowTitle("My Calculator")
 
 
+
     def buttonClicked(self):
 
         if self.display.text() == 'Error!':
@@ -85,21 +86,25 @@ class Calculator(QWidget):
             except:
                 result = 'Error!'
             self.display.setText(result)
+
         elif key == 'C':
             self.display.clear()
 
 
         elif key in constantList:
-	        if self.display.text().isdigit():
-		        self.display.setText(self.display.text() + "*" + constantList[key])
-	        else:
-		        self.display.setText(self.display.text() + constantList[key])
+            #현재 누른 키가 상수 키인데 눌렀을 때 당시의 결과창에 있는 것이 수로 표현될 수 있는 경우에는  "(현재 결과창에 있는수) * (현재 누른 상수의 값)" 으로 표현하여 결과창에 나타게 하도록 한다.
+            #실제 우리가 수학에서 3파이 라고 그냥 말하기 때문에 이 코드를 추가해 주었다.
+	    if self.display.text().isdigit():
+                self.display.setText(self.display.text() + "*" + constantValues[key])
+	    
+            else:
+		self.display.setText(self.display.text() + constantValues[key])
 	
-	    elif key in functionList:
-	        self.display.setText(functionList[key](self.display.text()))
+	elif key in functionList:
+	    self.display.setText(functionMethods[key](self.display.text()))
 	
-	    else:
-	        self.display.setText(self.display.text() + key)
+	else:
+	    self.display.setText(self.display.text() + key)
 
 if __name__ == '__main__':
 

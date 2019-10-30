@@ -15,23 +15,30 @@ operatorList = [
     'C',
 ]
 
-constantList = {
-    'pi' : "3.141592",
+constantMap = [
+    ('pi' , "3.141592"),
 
-    '빛의 이동 속도 (m/s)' : "3E+8",
+    ('빛의 이동 속도 (m/s)' , "3E+8"),
 
-    '소리의 이동 속도 (m/s)' : "340",
+    ('소리의 이동 속도 (m/s)' , "340"),
 
-    '태양과의 평균 거리 (km)' : "1.5E+8",
-}
+    ('태양과의 평균 거리 (km)' , "1.5E+8"),
+]
 
-functionList = {
-    'factorial (!)' : calcFunctions.factorial,
+constantList = [i[0] for i in constantMap]
+constantValues = {i[0]: i[1] for i in constantMap}
 
-    '-> binary' : calcFunctions.decToBin,
 
-    'binary -> dec' : calcFunctions.binToDec,
+functionMap = [
+    ('factorial (!)' , calcFunctions.factorial),
 
-    '-> roman' : calcFunctions.decToRoman,
-}
+    ('-> binary' , calcFunctions.decToBin),
+
+    ('binary -> dec' , calcFunctions.binToDec),
+
+    ('-> roman' , calcFunctions.decToRoman),
+]
+
+functionList = [i[0] for i in functionMap]
+functionMethods = {i[0]: i[1] for i in functionMap}
 

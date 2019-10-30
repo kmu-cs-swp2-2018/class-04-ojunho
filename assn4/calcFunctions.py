@@ -27,9 +27,9 @@ def binToDec(numStr):
 def decToRoman(numStr):
     return 'dec -> Roman'
 
-functionList = {
-    'factorial (!)' : 'factorial()',
-    '-> binary' : 'decToBin()',
-    'binary -> dec' : 'binToDec()',
-    '-> roman' : 'decToRoman()',
-}
+#functionList = {
+#    'factorial (!)' : 'factorial()',
+#    '-> binary' : 'decToBin()',
+#    'binary -> dec' : 'binToDec()',
+#    '-> roman' : 'decToRoman()',
+#}
