@@ -1,5 +1,16 @@
 from math import factorial as fact
 
+romans = [
+        (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
+        (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
+        (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'),
+        (1, 'I')
+    ]
+
+
+romans_list = [x[1] for x in romans]
+
+
 
 def factorial(numStr):
     try:
@@ -56,24 +67,19 @@ def decToRoman(numStr):
 def romanToDec(numStr):
 
 
-    if numStr.isdigit():
-        print(int(numStr))
-        print("a")
-        return "Put in the Roman alphabet"
+    splitList = list(numStr)
+    for i in splitList:
+        if not i in romans_list:
+            return "Put in the right Roman alphabet"
+            break
 
 
 
-    try:
-        n_ = numStr[:] #객체를 복사해옴.
+
+    else:
+        Copy_n =  numStr[:] #객체를 복사해옴.
 
         n = numStr
-
-        romans = [
-            (1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
-            (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
-            (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'),
-            (1, 'I')
-        ]
 
         result = 0
         for value, letters in romans:
@@ -95,14 +101,14 @@ def romanToDec(numStr):
 
 
 
-        if decToRoman(result) != n_:
+        if decToRoman(result) != Copy_n:
             return "Put the right content in"
 
         result = str(result)
         return result
 
-    except:
-        return "Error!"
+
+
 
 #######################################
 def romanToDec(romanStr):
@@ -119,3 +125,4 @@ def romanToDec(romanStr):
             # 왼쪽(1칸앞)의문자보다 크다면 빼야되는데, 2번빼는 이유는 이전 루프에서 더 했기 때문이다.
             result += romans[romanStr[i]] - 2 * romans[romanStr[i - 1]]
     return result
+
