@@ -45,4 +45,3 @@ functionMap = [
 
 functionList = [i[0] for i in functionMap]
 functionMethods = {i[0]: i[1] for i in functionMap}
-
