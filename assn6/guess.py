@@ -2,13 +2,14 @@ class Guess:
 
     def __init__(self, word):
 
-
+	
+        self.length = len(word)
         self.secretWord = word
         self.guessedChars = []
         self.numTries = 0
         self.currentStatus = ""
         self.currentStatus_Current = "_"*len(self.secretWord)
-        self.currentStatus_Tries = self.numTries #정수타입.
+        #self.currentStatus_Tries = self.numTries #정수타입.
 
 
 
@@ -17,14 +18,15 @@ class Guess:
 
     def display(self): # currentStatus 사용?
 
+        print("Length : ", self.length)
         print("Current : ", self.currentStatus_Current)
-        print("Tries : ", self.currentStatus_Tries)
+        print("Tries : ", self.numTries)
         print("Used : ", self.guessedChars)
 
     def guess(self, character):
         self.guessedChars.append(character)
         if not character in self.secretWord:
-            self.currentStatus_Tries += 1
+            self.numTries += 1
 
         else:
             while character in self.secretWord:
