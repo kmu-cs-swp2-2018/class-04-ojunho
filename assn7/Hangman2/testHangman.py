@@ -1,12 +1,14 @@
 import unittest
 
 from hangman import Hangman
+from guess import Guess
 
 
 class TestHangman(unittest.TestCase):
 
     def setUp(self):
         self.h1 = Hangman() #6
+        self.g1 = Guess("default")
 
     def tearDown(self):
         pass
