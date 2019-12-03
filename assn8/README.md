@@ -148,3 +148,40 @@ word class의 def randFromDB(self, i):
 
 HangmanGame class의 생성자 부분에서 QLineEdit()을 설정해주는 단계이다. 이 단계에서 self.currentWord.setFixedWidth(500)을 해주면 이 객체(QLineEdit())가 차지하는 공간도 커지고 전체 창의 크기도 커진다. 그에 따라서 밑의 길이도 커지게 되어 보이지 않는 버그는 줄어들었을 것이다.
 
+
+# 코드리뷰 이후.
+처음 짠 코드의 안타까운 점이 많았다.
+1. 숫자, 영어가아닌 알파벳, 소문자가 아닌 대문자의 처리가 되지 않음.
+2. word class의 무한반복문에 빠지지 않는 방법을 고안하지 못함.
+3. 과제 2에서 word class를 수정할 때에 '최대한 (인자) 보다 작은 단어를 선택하도록' 으로 잘못 이해하고 코드를 짰음.
+
+
+1. 숫자, 영어가아닌 알파벳, 소문자가 아닌 대문자의 처리가 되지 않음.
+        if not 'a' <= guessedChar <= 'z':
+            self.message.setText("Please enter lowercase English only")
+            return
+숫자와, 영어가 아닌 알파벳에 대한 처리를 해주었다. 'a' 'z'를 사용함으로써 소문자에 대한 처리도 되었다.
+그리고
+        #사용자에게 입력받은 문자를 소문자로 바꿔주었음.
+        success = self.guess.guess(guessedChar.lower())
+정상적으로 guess method를 사용할 때에 소문자로 바꿔주었다.
+
+2. word class의 무한반복문에 빠지지 않는 방법을 고안하지 못함.
+        maxLen = len(max(self.words, key = len))
+
+        if i > maxLen:
+            i = maxLen
+randFromDB(self, i) 메소드인데, 인자로 입력받은 값이 너무 커서 무한 반복문에 빠지지 않도록, 단어의 최대 길이보다 입력받은 인자가 클 경우에는 i를 maxLen으로 설정해준 다음에 로직을 진행한다.
+
+3. 과제 2에서 word class를 수정할 때에 '최대한 (인자) 보다 작은 단어를 선택하도록' 으로 잘못 이해하고 코드를 짰음.
+그래서
+        while True:
+            r = random.randrange(self.count)
+            if len(self.words[r]) >= i:
+                break
+로직을 수행할 때의 부등호 방향을 반대로 해주었다.
+
+
+
+
+

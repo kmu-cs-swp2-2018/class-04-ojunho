@@ -23,10 +23,16 @@ class Word:
 
     def randFromDB(self, i):
         # r = random.randrange(self.count)
-        # while len(self.words[r]) <
+        # while len(self.words[r])
+
+        maxLen = len(max(self.words, key = len))
+
+        if i > maxLen:
+            i = maxLen
+
         while True:
             r = random.randrange(self.count)
-            if len(self.words[r]) <= i:
+            if len(self.words[r]) >= i:
                 break
 
 

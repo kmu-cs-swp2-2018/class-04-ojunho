@@ -93,7 +93,7 @@ class HangmanGame(QWidget):
     def startGame(self):
         self.hangman = Hangman()
         #길이를 해주었다.
-        self.guess = Guess(self.word.randFromDB(10))
+        self.guess = Guess(self.word.randFromDB(40))
         self.gameOver = False
 
         self.hangmanWindow.setPlaceholderText(self.hangman.currentShape())
@@ -110,8 +110,7 @@ class HangmanGame(QWidget):
         if self.gameOver == True:
             # 메시지 출력하고 - message.setText() - 리턴
             self.message.setText("The game is over!")
-            return 1
-            pass
+            return -1
 
         # 입력의 길이가 1 인지를 판단하고, 아닌 경우 메시지 출력, 리턴
         if len(guessedChar) != 1:
@@ -123,8 +122,12 @@ class HangmanGame(QWidget):
             self.message.setText("already used \"" + guessedChar + "\"")
             return 1
 
+        if not 'a' <= guessedChar <= 'z':
+            self.message.setText("Please enter lowercase English only")
+            return
 
-        success = self.guess.guess(guessedChar)
+        #사용자에게 입력받은 문자를 소문자로 바꿔주었음.
+        success = self.guess.guess(guessedChar.lower())
         if success == False:
             # 남아 있는 목숨을 1 만큼 감소
             self.hangman.decreaseLife()
